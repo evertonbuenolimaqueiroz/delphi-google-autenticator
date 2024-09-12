@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/09/12 11:40:48.000.519,=rtl.dcp</Transaction>
+    <Transaction>2024/09/12 11:40:56.000.281,=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.pas</Transaction>
+    <Transaction>2024/09/12 11:41:52.000.940,C:\queirozbueno\Authenticator Google\Componente Criado por Everton\uGoogleAuthenticcatorComponent.pas=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.pas</Transaction>
+    <Transaction>2024/09/12 11:42:11.000.135,C:\queirozbueno\Authenticator Google\Componente Criado por Everton\GoogleAuthenticator.dproj=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
+    <Transaction>2024/09/12 11:50:39.000.318,=vcl.dcp</Transaction>
+    <Transaction>2024/09/12 11:50:39.000.364,=IndyProtocols.dcp</Transaction>
+    <Transaction>2024/09/12 11:50:39.000.341,=IndySystem.dcp</Transaction>
+    <Transaction>2024/09/12 11:50:39.000.387,=IndyCore.dcp</Transaction>
+    <Transaction>2024/09/12 12:16:54.000.447,=C:\queirozbueno\Authenticator Google\Componente Criado por Everton\GoogleOTP.pas</Transaction>
+    <Transaction>2024/09/12 12:16:54.000.432,=C:\queirozbueno\Authenticator Google\Componente Criado por Everton\Base32U.pas</Transaction>
+  </Transactions>
+</BorlandProject>
