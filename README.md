@@ -23,3 +23,6 @@ Para Validar o Token Capturado com o informado
     ShowMessage('Validado')
   else
     ShowMessage('Falha')
+
+
+    https://www.instagram.com/delphidevmaster/
