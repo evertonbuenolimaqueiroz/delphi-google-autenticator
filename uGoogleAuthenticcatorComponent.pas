@@ -16,6 +16,7 @@ type
     FIssuerName: String;
     FOTPSECRET: string;
     FQRCodeURL: string;
+    FKey: String;
     function ToIdBytes(const AInput: TArray<System.Byte>): TIdBytes;
     function Base32Decode(const Encoded: string): TIdBytes;
     function GenerateTOTP(SecretKey: string; TimeStepSeconds: Integer = 30;
@@ -24,6 +25,7 @@ type
     procedure SetQRCodeURL(const Value: string);
     procedure SetOTPSECRET(const Value: string);
     procedure SetIssuerName(const Value: String);
+    procedure SetKey(const Value: string);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -37,6 +39,7 @@ type
     property OTPSECRET: string read FOTPSECRET write SetOTPSECRET;
     property QRCodeURL: string read FQRCodeURL write SetQRCodeURL;
     property IssuerName: String read FIssuerName write SetIssuerName;
+    property Key: string read FKey write SetKey;
   end;
 
 procedure Register;
@@ -185,6 +188,11 @@ begin
   FIssuerName := Value;
 end;
 
+procedure TGoogleAuthenticator.SetKey(const Value: string);
+begin
+  FKey := Value;
+end;
+
 procedure TGoogleAuthenticator.SetQRCodeURL(const Value: string);
 begin
   FQRCodeURL := Value;
@@ -196,14 +204,9 @@ begin
 end;
 
 function TGoogleAuthenticator.Validar: Boolean;
-var
-  Codigo: Integer;
 begin
-  Result := False;
-  Codigo := CalculateOTP(OTPSECRET);
-
-  if ValidateTOTP(OTPSECRET, Codigo) then
-    Result := True;
+  Result := GeraToken = Key;
 end;
+
 
 end.
