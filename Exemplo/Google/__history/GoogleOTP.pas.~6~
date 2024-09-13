@@ -1,0 +1,157 @@
+unit GoogleOTP;
+
+interface
+
+uses
+  SysUtils, Math, Base32U, DateUtils, IdGlobal, IdHMAC, IdHMACSHA1;
+
+function GenerateTOTP(const Secret: String; TimeStepSeconds: Integer = 30; Digits: Integer = 6): string;
+function ValidateTOTP(const Secret: String; const Token: string; WindowSize: Integer = 4): Boolean;
+function GenerateOTPSecret(len: Integer = 20): String;
+
+implementation
+
+const
+  otpLength = 6;
+  keyRegeneration = 30;
+  SecretLengthDef = 20;
+
+/// <summary>
+///   Reverses TIdBytes (from low->high to high->low)
+/// </summary>
+function ReverseBytes(const inBytes: TIdBytes): TIdBytes;
+var
+  I: Integer;
+begin
+  SetLength(Result, Length(inBytes));
+  for I := Low(inBytes) to High(inBytes) do
+    Result[High(inBytes) - I] := inBytes[I];
+end;
+
+/// <summary>
+///   Converts a string to TIdBytes
+/// </summary>
+function StrToBytes(const inString: String): TIdBytes;
+var
+  Ch: Char;
+  I: Integer;
+begin
+  SetLength(Result, Length(inString));
+  I := 0;
+  for Ch in inString do
+  begin
+    Result[I] := Ord(Ch);
+    Inc(I);
+  end;
+end;
+
+/// <summary>
+///   Converts an integer value (like a time counter) to a byte array
+/// </summary>
+function IntToBytes(Value: Int64): TIdBytes;
+begin
+  SetLength(Result, 8);
+  Result[0] := (Value shr 56) and $FF;
+  Result[1] := (Value shr 48) and $FF;
+  Result[2] := (Value shr 40) and $FF;
+  Result[3] := (Value shr 32) and $FF;
+  Result[4] := (Value shr 24) and $FF;
+  Result[5] := (Value shr 16) and $FF;
+  Result[6] := (Value shr 8) and $FF;
+  Result[7] := Value and $FF;
+end;
+
+/// <summary>
+///   Generates the HMAC-SHA1 hash for the given key and data buffer
+/// </summary>
+function HMAC_SHA1(const Key, Data: TIdBytes): TIdBytes;
+var
+  HMAC: TIdHMACSHA1;
+begin
+  HMAC := TIdHMACSHA1.Create;
+  try
+    HMAC.Key := Key;
+    Result := HMAC.HashValue(Data);
+  finally
+    HMAC.Free;
+  end;
+end;
+
+/// <summary>
+///   Generates a TOTP (Time-based One-Time Password) based on the secret and the current time
+/// </summary>
+function GenerateTOTP(const Secret: String; TimeStepSeconds: Integer = 30; Digits: Integer = 6): string;
+var
+  UnixTime, TimeCounter: Int64;
+  TimeBytes, Hash, KeyBytes: TIdBytes;
+  Offset, BinaryCode: Integer;
+  TruncatedHash: Int64;
+begin
+  // Decodes the Base32 secret to bytes
+  KeyBytes := Base32.Decode(Secret);
+
+  // Get the current Unix time and calculate the time counter based on TimeStepSeconds
+  UnixTime := DateTimeToUnix(Now);
+  TimeCounter := UnixTime div TimeStepSeconds;
+
+  // Convert the TimeCounter to bytes
+  TimeBytes := IntToBytes(TimeCounter);
+
+  // Generate the HMAC-SHA1 hash of the time bytes using the secret key
+  Hash := HMAC_SHA1(KeyBytes, TimeBytes);
+
+  // Extract the dynamic binary code from the hash
+  Offset := Hash[High(Hash)] and $0F;
+  BinaryCode := ((Hash[Offset] and $7F) shl 24) or
+                ((Hash[Offset + 1] and $FF) shl 16) or
+                ((Hash[Offset + 2] and $FF) shl 8) or
+                (Hash[Offset + 3] and $FF);
+
+  // Truncate to the desired number of digits
+  TruncatedHash := BinaryCode mod Trunc(Power(10, Digits));
+
+  // Return the token formatted with leading zeros
+  Result := Format('%.*d', [Digits, TruncatedHash]);
+end;
+
+/// <summary>
+///   Validates the provided TOTP token against the expected value, with an optional time window
+/// </summary>
+function ValidateTOTP(const Secret: String; const Token: string; WindowSize: Integer = 4): Boolean;
+var
+  CurrentTime, TimeStepSeconds: Int64;
+  TestToken: string;
+  I: Integer;
+begin
+  Result := False;
+  TimeStepSeconds := keyRegeneration;
+
+  // Get the current time counter
+  CurrentTime := DateTimeToUnix(Now) div TimeStepSeconds;
+
+  // Test within the specified time window
+  for I := -WindowSize to WindowSize do
+  begin
+    TestToken := GenerateTOTP(Secret, TimeStepSeconds, otpLength);
+    if TestToken = Token then
+      Exit(True);
+  end;
+end;
+
+/// <summary>
+///   Generates a random Base32 secret key for OTP
+/// </summary>
+function GenerateOTPSecret(len: Integer = 20): String;
+var
+  I: Integer;
+  ValCharLen: Integer;
+begin
+  Result := '';
+  ValCharLen := Length(Base32U.ValidChars);
+
+  for I := 1 to len do
+    Result := Result + Copy(Base32U.ValidChars, Random(ValCharLen) + 1, 1);
+end;
+
+end.
+

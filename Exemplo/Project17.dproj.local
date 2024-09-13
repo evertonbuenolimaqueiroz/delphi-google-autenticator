@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/09/06 05:59:01.000.152,=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.pas</Transaction>
+    <Transaction>2024/09/06 06:50:39.000.606,=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.pas</Transaction>
+    <Transaction>2024/09/06 06:55:29.000.094,C:\PROJETOS\Senha Dinamica\Unit19.dfm=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.dfm</Transaction>
+    <Transaction>2024/09/06 06:55:29.000.094,C:\PROJETOS\Senha Dinamica\Unit19.pas=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit19.pas</Transaction>
+    <Transaction>2024/09/06 06:55:33.000.980,C:\PROJETOS\Senha Dinamica\Project17.dproj=C:\Users\evert\OneDrive\Documentos\Embarcadero\Studio\Projects\Project17.dproj</Transaction>
+    <Transaction>2024/09/06 07:54:43.000.227,=C:\PROJETOS\Senha Dinamica\Google\GoogleOTP.pas</Transaction>
+    <Transaction>2024/09/06 08:04:07.000.461,=C:\PROJETOS\Senha Dinamica\Unit1.pas</Transaction>
+    <Transaction>2024/09/06 08:04:55.000.068,C:\PROJETOS\Senha Dinamica\Unit1.pas=C:\PROJETOS\Senha Dinamica\Base32U.pas</Transaction>
+    <Transaction>2024/09/06 08:16:13.000.825,C:\PROJETOS\Senha Dinamica\Base32U.pas=</Transaction>
+    <Transaction>2024/09/06 08:25:30.000.452,=C:\PROJETOS\Senha Dinamica\Unit1.pas</Transaction>
+    <Transaction>2024/09/06 08:25:43.000.958,C:\PROJETOS\Senha Dinamica\Base32U.pas=C:\PROJETOS\Senha Dinamica\Unit1.pas</Transaction>
+    <Transaction>2024/09/13 10:41:47.672,C:\queirozbueno\Authenticator Google\Senha Dinamica\uGoogleAuthenticator.dfm=C:\queirozbueno\Authenticator Google\Senha Dinamica\Unit19.dfm</Transaction>
+    <Transaction>2024/09/13 10:41:47.672,C:\queirozbueno\Authenticator Google\Senha Dinamica\uGoogleAuthenticator.pas=C:\queirozbueno\Authenticator Google\Senha Dinamica\Unit19.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>
